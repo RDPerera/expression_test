@@ -6,6 +6,20 @@
                 expression="${payload.user.firstName + payload.user.lastName}" />
             <variable name="username" type="STRING"
                 expression="${replace(payload.user.username,&quot;_&quot;,&quot;-&quot;)}" />
+            <variable name="lowerUsername" type="STRING" expression="${toLower(vars.username)}" />
+            <variable name="trimmedRandomText" type="STRING"
+                expression="${trim(payload.randomText)}" />
+            <variable name="wordcount" type="STRING" expression="${length(payload.paragraph)}" />
+            <variable name="JSONPresence" type="STRING"
+                expression="${contains(payload.messages[0].content,&quot;JSON&quot;)}" />
+            <payloadFactory media-type="json" template-type="default">
+
+                <format>{ "fullname":"${vars.fullname}","username":"${vars.username}",
+                    "lowerusername":"${vars.lowerUsername}",
+                    "trimmedRandomText":"${vars.trimmedRandomText}",
+                    "wordcount":"${vars.wordcount}", "JSONpresence":"${vars.JSONPresence}" }</format>
+            </payloadFactory>
+        <respond />
         </inSequence>
         <faultSequence>
         </faultSequence>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/date" name="date" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/">
+        <inSequence>
+            <variable name="DateNow" type="STRING"
+                expression="${formatDateTime(now(), &quot;yyyy-MM-dd HH:mm:ss&quot;)}" />
+            <payloadFactory media-type="json" template-type="default">
+
+                <format>{"TIME
+                    DATE":"${vars.DateNow}"}</format>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource>
+</api>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/intops" name="intops" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/">
+        <inSequence>
+            <variable name="A" type="INTEGER" value="100" />
+            <variable name="B" type="INTEGER" value="200" />
+            <variable name="C" type="STRING" value="10" />
+            <variable name="Addition" type="INTEGER" expression="${vars.A+vars.B}" />
+            <variable name="Substraction" type="INTEGER" expression="${vars.B-vars.A}" />
+            <variable name="Dividance" type="INTEGER" expression="${vars.B/vars.A}" />
+            <variable name="AdditionWithString" type="INTEGER"
+                expression="${vars.A+integer(vars.C)}" />
+            <variable name="isNumber" type="STRING" expression="${isNumber(vars.A)}" />
+            <variable name="Multification" type="STRING" expression="${vars.A*vars.B}" />
+            <log category="INFO">
+                <message>
+                    Addition Result : ${vars.Addition}
+                    Substraction Result : ${vars.Substraction}
+                    Dividance Result : ${vars.Dividance}
+                    AdditionWithString Result : ${vars.AdditionWithString}
+                    isNumber Result : ${vars.isNumber}
+                    Multification Result : ${vars.Multification}
+                </message>
+            </log>
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource>
+</api>
