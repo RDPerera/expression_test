@@ -95,30 +95,6 @@ The following JSON payload was used for testing:
 }
 ```
 
-## API Definition  
-
-The API was defined using the following Synapse configuration:  
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<api context="/jsonaccess" name="jsonaccess" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST" uri-template="/">
-        <inSequence>
-            <variable name="orderId" type="STRING" expression="${payload.orderId}" />
-            <variable name="customerId" type="STRING" expression="${payload.customer.customerId}" />
-            <variable name="address" type="STRING" expression="${payload.customer.address}" />
-            <payloadFactory media-type="json" template-type="default">
-                <format>{ "OrderID":"${vars.orderId}", "CustomerID":"${vars.customerId}",
-                    "Address":${vars.address} }</format>
-            </payloadFactory>
-            <respond />
-        </inSequence>
-        <faultSequence>
-        </faultSequence>
-    </resource>
-</api>
-```
-
 ## Test Cases and Results  
 
 ### 1. Extracting `orderId` from Payload  
@@ -266,39 +242,6 @@ The following JSON payload was used for testing:
 }
 ```
 
-## API Definition  
-
-The API was defined using the following Synapse configuration:  
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<api context="/stringmanu" name="stringmanu" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="POST" uri-template="/">
-        <inSequence>
-            <variable name="fullname" type="STRING"
-                expression="${payload.user.firstName + payload.user.lastName}" />
-            <variable name="username" type="STRING"
-                expression="${replace(payload.user.username,&quot;_&quot;,&quot;-&quot;)}" />
-            <variable name="lowerUsername" type="STRING" expression="${toLower(vars.username)}" />
-            <variable name="trimmedRandomText" type="STRING"
-                expression="${trim(payload.randomText)}" />
-            <variable name="wordcount" type="STRING" expression="${length(payload.paragraph)}" />
-            <variable name="JSONPresence" type="STRING"
-                expression="${contains(payload.messages[1].content,&quot;JSON&quot;)}" />
-            <payloadFactory media-type="json" template-type="default">
-                <format>{ "fullname":"${vars.fullname}","username":"${vars.username}",
-                    "lowerusername":"${vars.lowerUsername}",
-                    "trimmedRandomText":"${vars.trimmedRandomText}",
-                    "wordcount":"${vars.wordcount}", "JSONpresence":"${vars.JSONPresence}" }</format>
-            </payloadFactory>
-        <respond />
-        </inSequence>
-        <faultSequence>
-        </faultSequence>
-    </resource>
-</api>
-```
-
 ## Test Cases and Results  
 
 ### 1. Concatenating `firstName` and `lastName`  
@@ -410,42 +353,6 @@ The API was defined using the following Synapse configuration:
 ## 3. Integer Operations Testing in WSO2 MI  
 
 This section documents the testing of mathematical operations using the Expression Editor in WSO2 MI. The tests validate operations such as addition, subtraction, division, multiplication, type conversion, and number validation.  
-
-### API Definition  
-
-The API was defined using the following Synapse configuration:  
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<api context="/intops" name="intops" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET" uri-template="/">
-        <inSequence>
-            <variable name="A" type="INTEGER" value="100" />
-            <variable name="B" type="INTEGER" value="200" />
-            <variable name="C" type="STRING" value="10" />
-            <variable name="Addition" type="INTEGER" expression="${vars.A+vars.B}" />
-            <variable name="Substraction" type="INTEGER" expression="${vars.B-vars.A}" />
-            <variable name="Dividance" type="INTEGER" expression="${vars.B/vars.A}" />
-            <variable name="AdditionWithString" type="INTEGER"
-                expression="${vars.A+integer(vars.C)}" />
-            <variable name="isNumber" type="STRING" expression="${isNumber(vars.A)}" />
-            <variable name="Multification" type="STRING" expression="${vars.A*vars.B}" />
-            <log category="INFO">
-                <message>
-                    Addition Result : ${vars.Addition}
-                    Substraction Result : ${vars.Substraction}
-                    Dividance Result : ${vars.Dividance}
-                    AdditionWithString Result : ${vars.AdditionWithString}
-                    isNumber Result : ${vars.isNumber}
-                    Multification Result : ${vars.Multification}
-                </message>
-            </log>
-        </inSequence>
-        <faultSequence>
-        </faultSequence>
-    </resource>
-</api>
-```
 
 ## Test Cases and Results  
 
@@ -559,28 +466,6 @@ Here's the documentation for your date test, formatted in the same structure as 
 # 3. Date Format Testing in WSO2 MI  
 
 This section documents the testing of date formatting in the Expression Editor in WSO2 MI. The test validates the ability to get the current date and time and format it in a custom format.  
-
-## API Definition  
-
-The API was defined using the following Synapse configuration:  
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<api context="/date" name="date" xmlns="http://ws.apache.org/ns/synapse">
-    <resource methods="GET" uri-template="/">
-        <inSequence>
-            <variable name="DateNow" type="STRING"
-                expression="${formatDateTime(now(), &quot;yyyy-MM-dd HH:mm:ss&quot;)}" />
-            <payloadFactory media-type="json" template-type="default">
-                <format>{"TIME DATE":"${vars.DateNow}"}</format>
-            </payloadFactory>
-            <respond />
-        </inSequence>
-        <faultSequence>
-        </faultSequence>
-    </resource>
-</api>
-```
 
 ## Test Case and Result  
 
