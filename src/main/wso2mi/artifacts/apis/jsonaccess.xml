@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/jsonaccess" name="jsonaccess" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/">
+        <inSequence>
+            <variable name="orderId" type="STRING" expression="${payload.orderId}" />
+            <variable name="customerId" type="STRING" expression="${payload.customer.customerId}" />
+            <variable name="address" type="STRING" expression="${payload.customer.address}" />
+            <payloadFactory media-type="json" template-type="default">
+
+                <format>{ "OrderID":"${vars.orderId}", "CustomerID":"${vars.customerId}",
+                    "Address":${vars.address} }</format>
+            </payloadFactory>
+            <respond />
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource>
+</api>

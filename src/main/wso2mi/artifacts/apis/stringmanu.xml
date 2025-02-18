@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/stringmanu" name="stringmanu" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" uri-template="/">
+        <inSequence>
+            <variable name="fullname" type="STRING"
+                expression="${payload.user.firstName + payload.user.lastName}" />
+            <variable name="username" type="STRING"
+                expression="${replace(payload.user.username,&quot;_&quot;,&quot;-&quot;)}" />
+        </inSequence>
+        <faultSequence>
+        </faultSequence>
+    </resource>
+</api>
